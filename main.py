@@ -4,7 +4,7 @@ from utils import cache
 from text_templates import example
 
 bot = telebot.TeleBot(os.environ.get('token'))
-moderators = [282213187, 160900344]
+moderators = []
 
 
 @bot.message_handler(commands=['start'])
