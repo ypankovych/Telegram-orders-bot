@@ -4,7 +4,7 @@ from utils import cache
 from text_templates import example
 
 bot = telebot.TeleBot(os.environ.get('token'))
-moderators = []
+moderators = [282213187, 160900344]
 
 
 @bot.message_handler(commands=['start'])
@@ -32,15 +32,15 @@ def delete_order(message):
             chat_id=message.reply_to_message.forward_from.id, text=f'Ваша заявка удалена.\n{reason[1]}')
 
 
-@bot.message_handler(content_types=['text', 'photo', 'video', 'document'])
+@bot.message_handler(content_types=['text', 'photo', 'video', 'document'], func=lambda m: m.chat.type == 'private')
 def take_order(message):
-    if message.chat.type == 'private':
-        if cache(message.from_user.id):
-            bot.forward_message(chat_id=-, from_chat_id=message.chat.id,
-                                message_id=message.message_id)
-            bot.send_message(chat_id=message.chat.id, text='Заявка принята.')
-        else:
-            bot.send_message(chat_id=message.chat.id, text='Между заявками должно пройти хотябы 5 минут.')
+    expire = cache(message.from_user.id)
+    if not expire:
+        bot.forward_message(chat_id=-1001299756866, from_chat_id=message.chat.id,
+                            message_id=message.message_id)
+        bot.send_message(chat_id=message.chat.id, text='Заявка принята.')
+    else:
+        bot.send_message(chat_id=message.chat.id, text=f'Подождите {expire} секунд прежде чем опять отправить заявку.')
 
 
 if __name__ == '__main__':
