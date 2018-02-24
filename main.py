@@ -36,7 +36,7 @@ def delete_order(message):
 def take_order(message):
     expire = cache(message.from_user.id)
     if not expire:
-        bot.forward_message(chat_id=-1001299756866, from_chat_id=message.chat.id,
+        bot.forward_message(chat_id=-1001299756866123, from_chat_id=message.chat.id,
                             message_id=message.message_id)
         bot.send_message(chat_id=message.chat.id, text='Заявка принята.')
     else:
