@@ -15,6 +15,7 @@ def is_admin(func):
         administrators = [x.user.id for x in bot.get_chat_administrators(message.chat.id)]
         print(message.from_user.id, administrators)
         if message.from_user.id in administrators:
+            print(True)
             return func(message)
     return wrapper
 
